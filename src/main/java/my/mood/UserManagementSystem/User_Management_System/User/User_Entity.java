@@ -7,6 +7,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class User_Entity {
@@ -15,15 +18,24 @@ public class User_Entity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@NotBlank(message = "Name cannot be empty!")
+	@Size(min = 5, message = "Name cannot be less than 5 characters!")
 	private String name;
 	
 	@Column(unique = true)
+	@Email(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Email should be valid and contain a domain")
+	@NotBlank(message = "Email cannot be empty")
 	private String email;
 	
+	@Size(min = 8, message = "Password cannot be less than 8 characters!")
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
 	private User_Role role;
+	
+	public User_Entity() {
+		
+	}
 	
 	public User_Entity(int id, String name, String email, String password, User_Role role) {
 		super();
