@@ -1,5 +1,7 @@
 package my.mood.UserManagementSystem.User_Management_System.User;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,17 +22,21 @@ public class User_Entity {
 	
 	@NotBlank(message = "Name cannot be empty!")
 	@Size(min = 5, message = "Name cannot be less than 5 characters!")
+	@Column(nullable = false)
 	private String name;
 	
-	@Column(unique = true)
-	@Email(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Email should be valid and contain a domain")
-	@NotBlank(message = "Email cannot be empty")
+	@Column(unique = true, nullable = false)
+	@Email(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Email should be valid and contain a domain!")
+	@NotBlank(message = "Email cannot be empty!")
 	private String email;
 	
 	@Size(min = 8, message = "Password cannot be less than 8 characters!")
+	@NotBlank(message = "Password cannot be empty!")
+	@Column(nullable = false)
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private User_Role role;
 	
 	public User_Entity() {
@@ -91,5 +97,10 @@ public class User_Entity {
 		return "User_Entity [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role="
 				+ role + "]";
 	}
+	
+	// This will encrypt passwords before saving them in the database
+	public void encryptPassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
 	
 }
