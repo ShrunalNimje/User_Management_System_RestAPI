@@ -1,4 +1,4 @@
-package my.mood.UserManagementSystem.User_Management_System.User;
+package my.mood.UserManagementSystem.User_Management_System.Admin;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;

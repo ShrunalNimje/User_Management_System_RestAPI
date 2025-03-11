@@ -1,4 +1,4 @@
-package my.mood.UserManagementSystem.User_Management_System.User;
+package my.mood.UserManagementSystem.User_Management_System.Admin;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import my.mood.UserManagementSystem.User_Management_System.User.UserRepository;
+import my.mood.UserManagementSystem.User_Management_System.User.User_Entity;
+import my.mood.UserManagementSystem.User_Management_System.User.User_Role;
 
 @RestController
 public class AdminController {
