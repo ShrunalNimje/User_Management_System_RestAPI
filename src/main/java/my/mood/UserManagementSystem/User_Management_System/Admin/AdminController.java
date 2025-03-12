@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import my.mood.UserManagementSystem.User_Management_System.User.UserRepository;
 import my.mood.UserManagementSystem.User_Management_System.User.User_Entity;
-import my.mood.UserManagementSystem.User_Management_System.User.User_Role;
 
 @RestController
 public class AdminController {
@@ -45,7 +44,7 @@ public class AdminController {
 	}
 	
 	@DeleteMapping("/admin/users/")
-	public void deleteUser() {
+	public void deleteAll() {
 		repository.deleteAll();
 	}
 	
@@ -88,7 +87,7 @@ public class AdminController {
 		users.setName(userDTO.getName());
 		users.setEmail(userDTO.getEmail());
 		users.setPassword(encoder.encode(userDTO.getPassword()));
-		users.setRole(User_Role.valueOf(userDTO.getRole().toUpperCase()));
+		users.setRole((userDTO.getRole()));
 		
 		repository.save(users);
 		

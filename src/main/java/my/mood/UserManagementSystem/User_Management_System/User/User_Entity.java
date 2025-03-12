@@ -94,8 +94,7 @@ public class User_Entity {
 
 	@Override
 	public String toString() {
-		return "User_Entity [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role="
-				+ role + "]";
+		return "User_Entity [id=" + id + ", name=" + name + ", email=" + email + ", role=" + role + "]";
 	}
 	
 	// This will encrypt passwords before saving them in the database
