@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import my.mood.UserManagementSystem.User_Management_System.Exception.UserNotFoundException;
 import my.mood.UserManagementSystem.User_Management_System.User.UserRepository;
 import my.mood.UserManagementSystem.User_Management_System.User.User_Entity;
 
@@ -39,44 +40,52 @@ public class AdminController {
 	}
 	
 	@DeleteMapping("/admin/users/{id}/")
-	public void deleteUser(@Valid @PathVariable int id) {
+	public ResponseEntity<String> deleteUser(@Valid @PathVariable int id) {
 		repository.deleteById(id);
+		
+		return ResponseEntity.ok("User deleted successfully with id :" + id);
 	}
 	
 	@DeleteMapping("/admin/users/")
-	public void deleteAll() {
+	public ResponseEntity<String> deleteAll() {
 		repository.deleteAll();
+		
+		return ResponseEntity.ok("All Users are deleted successfully!");
 	}
 	
 	@PostMapping("/admin/users/")
-	public void addUser(@Valid @RequestBody User_Entity user) {
+	public ResponseEntity<String> addUser(@Valid @RequestBody User_Entity user) {
+		user.setPassword(encoder.encode(user.getPassword()));
 		repository.save(user);
+		
+		return ResponseEntity.ok("User created successfully with role :" + user.getRole());
 	}
 	
 	@PutMapping("/admin/users/{id}/") 
-	public User_Entity updateUser(@Valid @RequestBody User_Entity user, @Valid @PathVariable int id) {
+	public ResponseEntity<String> updateUser(@Valid @RequestBody User_Entity user, @Valid @PathVariable int id) {
 		Optional<User_Entity> existingUser = retrieveSpecificUser(id);
 		
 		if(existingUser.isPresent()) {
 			User_Entity tempUser = existingUser.get();
 			
-			tempUser.setEmail(user.getEmail());
 			tempUser.setName(user.getName());
-			tempUser.setPassword(user.getPassword());
+			tempUser.setPassword(encoder.encode(user.getPassword()));
 			tempUser.setRole(user.getRole());
 			
 			tempUser.setId(id);
 			
-			return repository.save(tempUser);
+			repository.save(tempUser);
+			
+			return ResponseEntity.ok("User updated successfully with role :" + tempUser.getRole());
 		}
 		else {
-			throw new RuntimeException("User not found with id = " + id);
+			throw new UserNotFoundException("User not found with id = " + id);
 		}
 	}
 	
-	@PostMapping("/admin/users/register/")
+	@PostMapping("/register/")
 	public ResponseEntity<String> registerUser(@RequestBody UserRegistrationDTO userDTO) {
-		Optional<User_Entity> existingUser = repository.findByName(userDTO.getName());
+		Optional<User_Entity> existingUser = repository.findByEmail(userDTO.getEmail());
 		
 		if(existingUser.isPresent()) {
 			return ResponseEntity.badRequest().body("Username already exists!");
@@ -94,7 +103,7 @@ public class AdminController {
 		return ResponseEntity.ok("User registered successfully with role: " + users.getRole());
 	}
 	
-	@GetMapping("/admin/dashboard")
+	@GetMapping("/admin/dashboard/")
 	public String adminDashboard() {
 		return "Welocome to Admin Dashboard!";
 	}

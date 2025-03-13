@@ -14,8 +14,8 @@ public class UserService {
 	private static int count = 0;
 	
 	static {
-		users.add(new User_Entity(++count, "Shrunal", "sn@gmail.com", "sn123", User_Role.ADMIN));
-		users.add(new User_Entity(++count, "Ritik", "rn@gmail.com", "rn123", User_Role.USER));
+		users.add(new User_Entity(++count, "Shrunal", "sn@gmail.com", "sn123", User_Role.ROLE_ADMIN));
+		users.add(new User_Entity(++count, "Ritik", "rn@gmail.com", "rn123", User_Role.ROLE_USER));
 		
 	}
 	

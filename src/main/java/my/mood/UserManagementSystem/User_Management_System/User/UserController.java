@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import my.mood.UserManagementSystem.User_Management_System.Exception.UserNotFoundException;
+
 @RestController
 public class UserController {
 	
@@ -24,7 +26,7 @@ public class UserController {
 	@DeleteMapping("/user/delete/")
 	public ResponseEntity<?> deleteUser(Principal principal) {
 		User_Entity existingUser = repository.findByEmail(principal.getName())
-				.orElseThrow(() -> new RuntimeException("User not found!"));
+				.orElseThrow(() -> new UserNotFoundException("User not found!"));
 		
 		repository.delete(existingUser);
 		
@@ -34,7 +36,7 @@ public class UserController {
 	@PutMapping("/user/update/")
 	public ResponseEntity<?> updateUser(Principal principal, @RequestBody User_Entity updatedUser) {
 		User_Entity existingUser = repository.findByEmail(principal.getName())
-				.orElseThrow(() -> new RuntimeException("User not found!"));
+				.orElseThrow(() -> new UserNotFoundException("User not found!"));
 		
 		if(updatedUser.getName() != null) {
 			existingUser.setName(updatedUser.getName());
@@ -50,8 +52,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/profile/")
-	public String userProfile() {
-		return "Welcome to User Profile!";
+	public String userProfile(Principal principal) {
+		return "hey there, " + principal.getName() + " is here!";
 	}
 	
 }

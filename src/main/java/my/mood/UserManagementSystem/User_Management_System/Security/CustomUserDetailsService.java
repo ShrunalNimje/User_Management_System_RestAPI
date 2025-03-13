@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		
 		return User.withUsername(user.getEmail())
                 .password(user.getPassword()) // The password must already be encoded!
-                .roles(user.getRole().name()) // Convert Role Enum to String
+                .authorities(user.getRole().name()) // Convert Role Enum to String
                 .build();
 	}
 
