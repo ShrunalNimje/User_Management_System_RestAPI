@@ -1,8 +1,9 @@
 package my.mood.UserManagementSystem.User_Management_System.Admin;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,8 +31,8 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/users/")
-	public List<User_Entity> retrieveUsers() {
-		return repository.findAll();
+	public Page<User_Entity> retrieveUsers(Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 	
 	@GetMapping("/admin/users/{id}/")
