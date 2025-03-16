@@ -91,9 +91,6 @@ GET /admin/users/?page=0&size=5&sort=id,asc
 ## 💡 Author
 Developed by **[Shrunal Nimje](https://github.com/ShrunalNimje)**
 
-## 📜 License
-This project is **open-source** and available under the **MIT License**.
-
 ---
 
 🔥 **Feel free to fork and contribute!** 🚀
