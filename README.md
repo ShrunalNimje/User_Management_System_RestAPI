@@ -4,7 +4,7 @@
 This is a **User Management System REST API** built using **Spring Boot**. It provides role-based access control, allowing **Admin** users to manage all users while **regular users** can only access and modify their own profiles.
 
 ## ✨ Features
-- **User Authentication & Authorization** (Basic Auth)
+- **User Authentication & Authorization** (JWT Authentication)
 - **Role-Based Access Control (RBAC)**
 - **User Registration with Role Selection**
 - **CRUD Operations for Users** (Admins only)
@@ -12,15 +12,17 @@ This is a **User Management System REST API** built using **Spring Boot**. It pr
 - **Pagination & Sorting for user retrieval**
 - **Exception Handling**
 - **Dockerized MySQL Database**
-
+  
 ## 🛠️ Tech Stack
 - **Java 20+**
 - **Spring Boot 3.4.3**
-- **Spring Security (Basic Authentication)**
+- **Spring Security (JWT Authentication)**
 - **Spring Data JPA**
 - **MySQL (Docker Container)**
 - **Maven**
-
+- **Swagger / Springdoc OpenAPI**
+- **JUnit & Mockito** for unit testing
+  
 ## 🚀 Setup & Installation
 
 ### 1️⃣ Clone the Repository
@@ -57,8 +59,8 @@ mvn spring-boot:run
 ### 🔹 Authentication
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/register/` | Register a new user with a role |
-| `GET`  | `/user/profile/` | Get logged-in user profile |
+| `POST` | `/register/` | Register a new user with a default role user |
+| `POST` | `/login/` | login an user with right credentials |
 
 ### 🔹 Admin Endpoints (Requires `ADMIN` Role)
 | Method | Endpoint | Description |
@@ -69,24 +71,38 @@ mvn spring-boot:run
 | `DELETE` | `/admin/users/{id}/` | Delete user by ID |
 | `DELETE` | `/admin/users/` | Delete all users |
 | `POST` | `/admin/users/` | Create an user |
+| `GET` | `/admin/dashboard/` | Get admin profile |
 
 ### 🔹 User Endpoints (Requires Authentication)
 | Method | Endpoint | Description |
 |--------|---------|-------------|
 | `PUT` | `/user/update/` | Update own profile |
 | `DELETE` | `/user/delete/` | Delete own account |
+| `GET`  | `/user/profile/` | Get logged-in user profile |
+
+## 📘 Swagger Documentation
+Access the interactive API docs at:
+
+```sh
+http://localhost:8080/swagger-ui/index.html
+```
+
+## 🧪 Testing
+Unit tests for the service layer are written using **JUnit** and **Mockito**.
+
+## 🔐 Authentication
+**JWT Authentication:** Secure endpoints using JWT tokens.
+After login, include the token in the Authorization header as:
+
+```sh
+Authorization: Bearer <token>
+```
 
 ## 📖 Pagination & Sorting
 To fetch paginated results with sorting:
 ```http
 GET /admin/users/?page=0&size=5&sort=id,asc
 ```
-
-## 🛠️ Future Improvements
-- ✅ JWT Authentication
-- ✅ Unit Testing
-- ✅ Swagger API Documentation
-- ✅ Deploy on AWS
 
 ## 💡 Author
 Developed by **[Shrunal Nimje](https://github.com/ShrunalNimje)**
