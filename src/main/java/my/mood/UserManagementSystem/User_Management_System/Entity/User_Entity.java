@@ -1,4 +1,4 @@
-package my.mood.UserManagementSystem.User_Management_System.User;
+package my.mood.UserManagementSystem.User_Management_System.Entity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import my.mood.UserManagementSystem.User_Management_System.Role.User_Role;
 
 @Entity
 public class User_Entity {
